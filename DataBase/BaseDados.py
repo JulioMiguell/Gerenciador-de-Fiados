@@ -9,13 +9,22 @@ class BaseDados:
 
             cur = con.cursor()
 
-            sql = """
+            sqlClientes = """
             CREATE TABLE clientes (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL UNIQUE)
                 """
 
-            cur.execute(sql)
+            cur.execute(sqlClientes)
             con.commit()
+
+            sqlProdutos = """
+            CREATE TABLE produtos (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, 
+            valor REAL NOT NULL)
+                """
+            cur.execute(sqlProdutos)
+            con.commit()
+
+
             con.close()
         except sqlite3.OperationalError:
             print('A base já existe')

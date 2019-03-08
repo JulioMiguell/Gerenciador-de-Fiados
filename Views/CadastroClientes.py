@@ -48,14 +48,19 @@ class CadastroClientes(QMainWindow):
 
     def bntCadastrarClicked(self):
         self.nomeDigitado = self.campoNome.text()
-        clienteCTR.cadastrarCliente(self.nomeDigitado)
-        avisoCadastro = QMessageBox.information(self, 'Aviso', 'Cliente: {} cadastrado com sucesso!'.format(self.nomeDigitado))
+
+        if (self.nomeDigitado != ''):
+            clienteCTR.cadastrarCliente(self.nomeDigitado)
+            avisoCadastro = QMessageBox.information(self, 'Aviso', 'Cliente: {} cadastrado com sucesso!'.format(self.nomeDigitado))
+        else:
+            aviso = QMessageBox.information(self, 'Atenção!', 'Registro em branco, favor inserir um nome a ser cadastrado')
+        
 
     def bntExcluirClicked(self):
         self.nomeDigitado = self.campoNome.text()
         
         if(self.nomeDigitado == ''):
-            aviso = QMessageBox.information(self, 'Atenção!', 'Registro em branco!')
+            aviso = QMessageBox.information(self, 'Atenção!', 'Registro em branco! \n É necessário inserir o nome a ser excluído')
         
         if(clienteCTR.buscarCliente(self.nomeDigitado) == self.nomeDigitado):
             avisoExlusão = QMessageBox.question(self, 'Atenção', 'Você deseja realmente excluir o cliente: {}'.format(self.nomeDigitado), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
