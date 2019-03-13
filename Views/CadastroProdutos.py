@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from controller.ProdutoCTR import ProdutoCTR
 
-class CadastroProdutos(QMainWindow):
+class CadastroProdutos(QDialog):
     
     def __init__(self):
         super().__init__()
@@ -14,6 +14,7 @@ class CadastroProdutos(QMainWindow):
         self.top = 200
         self.width = 400
         self.height = 350 
+        self.bntCadastrarClickedStatus = None
 
         self.initUI()
     
@@ -42,7 +43,7 @@ class CadastroProdutos(QMainWindow):
         self.bntCadastrar.setStyleSheet('QPushButton {font: 20px; font: bold}')
         self.bntCadastrar.setGeometry(20,250,160,50)
         self.bntCadastrar.clicked.connect(self.bntCadastrarClicked)
-
+        
         self.bntExcluir = QPushButton('Excluir', self)
         self.bntExcluir.setStyleSheet('QPushButton {font: 20px; font: bold}')
         self.bntExcluir.setGeometry(220,250,160,50)
@@ -60,11 +61,13 @@ class CadastroProdutos(QMainWindow):
             ProdutoCTR.cadastrarProduto(self.nomeDigitado, self.valorInserido)
             avisoCadastro = QMessageBox.information(self, 'Aviso', 
             'Produto: {} de valor R$ {} cadastrado com sucesso!'.format(self.nomeDigitado, self.valorInserido))
+            
+            self.bntCadastrarClickedStatus = True
 
         else:
-            aviso = QMessageBox.information(self, 'Atenção!', 'Algum Registro em branco! \n Favor preencher todos os campos')
+          aviso = QMessageBox.information(self, 'Atenção!', 'Algum Registro em branco! \n Favor preencher todos os campos')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    telaCadastroClientes = CadastroProdutos()
+    telaCadastroProdutos = CadastroProdutos()
     sys.exit(app.exec_())

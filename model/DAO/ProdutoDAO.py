@@ -17,6 +17,21 @@ class ProdutoDAO:
         cur.execute(query)
         con.commit()
         print('Produtos cadastrados com sucesso')
+    
+    def listarProdutos():
+        con = ConexaoSQL.conexaoBd()
+        cur = con.cursor()
+
+        query = """
+        SELECT nome
+        FROM produtos
+        """
+
+        cur.execute(query)
+
+        data = cur.fetchall()
+        
+        return data
 
         
         

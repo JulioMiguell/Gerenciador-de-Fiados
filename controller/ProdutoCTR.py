@@ -10,3 +10,8 @@ class ProdutoCTR:
 
         produtoDAO = ProdutoDAO
         produtoDAO.cadastrarProduto(produtoDTO)
+    
+    def listarProdutos():
+        produtoDAO = ProdutoDAO
+
+        return produtoDAO.listarProdutos()

@@ -5,6 +5,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Views.CadastroClientes import CadastroClientes
 from Views.CadastroProdutos import CadastroProdutos
+from controller.ProdutoCTR import ProdutoCTR
+import threading
 
 class TelaPrincipal(QMainWindow):
     
@@ -17,8 +19,10 @@ class TelaPrincipal(QMainWindow):
         self.width = 840
         self.height = 480 
 
+        self.flagAcesso = 0
+
         self.initUI()
-    
+
     def initUI(self):
 
         self.labelTitle = QLabel('Fiados', self)
@@ -37,12 +41,11 @@ class TelaPrincipal(QMainWindow):
         self.lbAddProdutos.setStyleSheet('QPushButton {font: bold; font: 16px;}')
         
         self.boxProdutos = QComboBox(self)
-        self.boxProdutos.setGeometry(280,170,150,40)
-        self.boxProdutos.addItem('Produto 1')
-        self.boxProdutos.addItem('Produto 2')
-
+        self.boxProdutos.setGeometry(280,170,120,40)
+        self.listaProdutos()
+        
         self.lbQtde = QLabel('Qtde:', self)
-        self.lbQtde.setGeometry(450,170,50,40)
+        self.lbQtde.setGeometry(460,170,50,40)
         self.lbQtde.setStyleSheet('QLabel {font: bold; font: 16px; border-radius: 5px; background: #D2D7D3}')
 
         self.spinQtde = QSpinBox(self)
@@ -86,15 +89,15 @@ class TelaPrincipal(QMainWindow):
         #Seção de cadastrar clientes e produtos
         self.lbCadastrar = QLabel(' Cadastrar/Alterar: ', self)
         self.lbCadastrar.setStyleSheet('QLabel {font: 18px; font: bold; background: #4B77BE; border-radius: 5px}')
-        self.lbCadastrar.setGeometry(665,270,170,40)
+        self.lbCadastrar.setGeometry(665,250,170,40)
         
         self.bntClientes = QPushButton('Clientes', self)
         self.bntClientes.setStyleSheet('QPushButton {font: 20px; font: bold}')
-        self.bntClientes.setGeometry(700,330,120,50)
+        self.bntClientes.setGeometry(700,310,120,50)
         self.bntClientes.clicked.connect(self.bntCadastrarClientesClicked)
         
         self.bntProdutos = QPushButton('Produtos', self)
-        self.bntProdutos.setGeometry(700,400,120,50)
+        self.bntProdutos.setGeometry(700,370,120,50)
         self.bntProdutos.setStyleSheet('QPushButton {font: 20px; font: bold}')
         self.bntProdutos.clicked.connect(self.bntCadastrarProdutosClicked)
         
@@ -105,10 +108,30 @@ class TelaPrincipal(QMainWindow):
 
     def bntCadastrarClientesClicked(self):
         self.telaCadastrocliente = CadastroClientes()
-    
-    def bntCadastrarProdutosClicked(self):
-        self.telaCadastroProdutos = CadastroProdutos()
+        
 
+    def bntCadastrarProdutosClicked(self):
+        telaCadastroProdutos = CadastroProdutos()
+        telaCadastroProdutos.exec_()
+        print(telaCadastroProdutos.bntCadastrarClickedStatus)
+        if(telaCadastroProdutos.bntCadastrarClickedStatus):
+            self.listaProdutos()
+
+
+    def listaProdutos(self):
+
+        self.produtos = ProdutoCTR.listarProdutos()
+        self.tamListaProdutos = len(ProdutoCTR.listarProdutos())
+        
+        if (self.flagAcesso == 0):
+            for i in self.produtos:
+                self.boxProdutos.addItem(i[0])
+            
+            self.flagAcesso += 1
+        else:
+            self.boxProdutos.addItem(self.produtos[self.tamListaProdutos-1][0])
+         
+                
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     telaPrincipal = TelaPrincipal()
