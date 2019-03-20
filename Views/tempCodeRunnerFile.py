@@ -1,2 +1,0 @@
-ion(sys.argv)
-    telaCadastroClien

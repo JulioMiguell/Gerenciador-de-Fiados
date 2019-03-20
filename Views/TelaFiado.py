@@ -10,16 +10,19 @@ class TelaFiado(QMainWindow):
         self.left = 300
         self.top = 100
         self.width = 600
-        self.height = 600 
+        self.height = 630 
         
         self.initUI()
 
     def initUI(self):
         
-        self.lbBuscarCliente = QPushButton('Buscar cliente ', self)
+        self.bntBuscarCliente = QPushButton('Buscar cliente ', self)
         self.lbTotal = QLabel(' DÍVIDA TOTAL R$: 00,00 ', self)
         self.lbTotal.setStyleSheet('QLabel {font: bold; font: 20px; background-color: #26C281; border-radius: 5px}')
-        self.lbBuscarCliente.setStyleSheet('QPushButton {font: bold; font: 20px;}')
+        self.bntBuscarCliente.setStyleSheet('QPushButton {font: bold; font: 20px;}')
+
+        self.bntQuitar = QPushButton('Quitar Dívida', self)
+        self.bntQuitar.setStyleSheet('QPushButton {font: bold; font: 20px;}')
 
         self.campoBuscaCliente = QLineEdit(self)
         #self.campoBuscaCliente.setGeometry(0,0,200,50)
@@ -29,16 +32,14 @@ class TelaFiado(QMainWindow):
         self.widget = QWidget(self)
         layout = QGridLayout()
         self.widget.setLayout(layout)
-        layout.addWidget(self.tabela,2,0,20,15)
-        layout.addWidget(self.lbBuscarCliente,0,1)
+        layout.addWidget(self.tabela,3,0,20,15)
+        layout.addWidget(self.bntBuscarCliente,0,1) #(linha, coluna)
         layout.addWidget(self.campoBuscaCliente,0,2)
-        layout.addWidget(self.lbTotal,1,1)
-        
+        layout.addWidget(self.lbTotal,2,2)
+        layout.addWidget(self.bntQuitar,2,1)
         
 
         self.setCentralWidget(self.widget)
-
-        
 
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
@@ -46,17 +47,17 @@ class TelaFiado(QMainWindow):
     
     def createTable(self):
         self.tableDividas = QTableWidget(self)
-        self.tableDividas.setRowCount(15)
+        self.tableDividas.setRowCount(20)
         self.tableDividas.setColumnCount(5)
         self.tableDividas.setItem(0,0,QTableWidgetItem('NOME'))
         self.tableDividas.setItem(0,1,QTableWidgetItem('PRODUTO'))
         self.tableDividas.setItem(0,2,QTableWidgetItem('QTDE'))
-        self.tableDividas.setItem(0,3,QTableWidgetItem('DATA DA COMPRA'))
+        self.tableDividas.setItem(0,3,QTableWidgetItem('DATA_COMPRA'))
         self.tableDividas.setItem(0,4,QTableWidgetItem('TOTAL R$'))
 
         self.tableDividas.setEditTriggers(QTableWidget.NoEditTriggers) #bloqueia todas as celulas
 
-        self.tableDividas.setStyleSheet('QTableWidget {font: 15px; font: bold}')
+        self.tableDividas.setStyleSheet('QTableWidget {font: 14px; font: bold}')
         
         return self.tableDividas
 

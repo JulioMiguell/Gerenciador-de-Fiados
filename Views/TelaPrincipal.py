@@ -5,6 +5,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Views.CadastroClientes import CadastroClientes
 from Views.CadastroProdutos import CadastroProdutos
+from Views.TelaFiado import TelaFiado
 from controller.ProdutoCTR import ProdutoCTR
 import threading
 
@@ -41,7 +42,7 @@ class TelaPrincipal(QMainWindow):
         self.lbAddProdutos.setStyleSheet('QPushButton {font: bold; font: 16px;}')
         
         self.boxProdutos = QComboBox(self)
-        self.boxProdutos.setGeometry(280,170,120,40)
+        self.boxProdutos.setGeometry(280,170,140,40)
         self.listaProdutos()
         
         self.lbQtde = QLabel('Qtde:', self)
@@ -52,7 +53,6 @@ class TelaPrincipal(QMainWindow):
         self.spinQtde.setGeometry(520,170,60,40)
         self.spinQtde.setStyleSheet('QSpinBox {font: bold; font: 16px;}')
 
-        
         self.boxData = QDateEdit(self)
         self.boxData.setGeometry(280,240,300,40)
         self.boxData.setStyleSheet('QDateEdit {font: 16px; font: bold}')
@@ -77,9 +77,10 @@ class TelaPrincipal(QMainWindow):
         self.line.setGeometry(650, 0, 5, 480)
         self.line.setStyleSheet('QLabel { background: #22313F}')
 
-        self.bntVerFiados = QPushButton('Ver|Quitar Fiados', self)
-        self.bntVerFiados.setStyleSheet('QPushButton {font: 16px; font: bold}')
-        self.bntVerFiados.setGeometry(670,30,165,50)
+        self.bntVerQuitarFiados = QPushButton('Ver|Quitar Fiados', self)
+        self.bntVerQuitarFiados.setStyleSheet('QPushButton {font: 16px; font: bold}')
+        self.bntVerQuitarFiados.setGeometry(670,30,165,50)
+        self.bntVerQuitarFiados.clicked.connect(self.bntVerQuitarFiadosClicked)
 
         self.imagemLabel = QLabel(self)
         pixmap = QPixmap('Views/imagens/money.png')
@@ -97,7 +98,7 @@ class TelaPrincipal(QMainWindow):
         self.bntClientes.clicked.connect(self.bntCadastrarClientesClicked)
         
         self.bntProdutos = QPushButton('Produtos', self)
-        self.bntProdutos.setGeometry(700,370,120,50)
+        self.bntProdutos.setGeometry(700,390,120,50)
         self.bntProdutos.setStyleSheet('QPushButton {font: 20px; font: bold}')
         self.bntProdutos.clicked.connect(self.bntCadastrarProdutosClicked)
         
@@ -105,6 +106,10 @@ class TelaPrincipal(QMainWindow):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.show()
+    
+    def bntVerQuitarFiadosClicked(self):
+        self.telaFiados = TelaFiado()
+
 
     def bntCadastrarClientesClicked(self):
         self.telaCadastrocliente = CadastroClientes()
@@ -119,7 +124,6 @@ class TelaPrincipal(QMainWindow):
 
 
     def listaProdutos(self):
-
         self.produtos = ProdutoCTR.listarProdutos()
         self.tamListaProdutos = len(ProdutoCTR.listarProdutos())
         
@@ -128,6 +132,7 @@ class TelaPrincipal(QMainWindow):
                 self.boxProdutos.addItem(i[0])
             
             self.flagAcesso += 1
+        
         else:
             self.boxProdutos.addItem(self.produtos[self.tamListaProdutos-1][0])
          
