@@ -32,6 +32,22 @@ class ProdutoDAO:
         data = cur.fetchall()
         
         return data
+    
+    def obterValor(nome):
+        con = ConexaoSQL.conexaoBd()
+        cur = con.cursor()
+
+        query = """
+        SELECT valor
+        from produtos
+        where nome = '{}'
+        """.format(nome)
+
+        cur.execute(query)
+
+        data = cur.fetchone()
+
+        return data[2]
 
         
         

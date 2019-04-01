@@ -15,3 +15,9 @@ class ProdutoCTR:
         produtoDAO = ProdutoDAO
 
         return produtoDAO.listarProdutos()
+    
+    def obterValor(nome):
+        produtoDAO = ProdutoDAO
+
+        return produtoDAO.obterValor(nome)
+

@@ -7,6 +7,8 @@ from Views.CadastroClientes import CadastroClientes
 from Views.CadastroProdutos import CadastroProdutos
 from Views.TelaFiado import TelaFiado
 from controller.ProdutoCTR import ProdutoCTR
+from controller.ClienteCTR import clienteCTR
+from controller.DividaCTR import DividaCTR
 import threading
 
 class TelaPrincipal(QMainWindow):
@@ -21,6 +23,7 @@ class TelaPrincipal(QMainWindow):
         self.height = 480 
 
         self.flagAcesso = 0
+        self.clienteLocalizado = False
 
         self.initUI()
 
@@ -33,16 +36,19 @@ class TelaPrincipal(QMainWindow):
         self.campoBuscaCliente = QLineEdit(self)
         self.campoBuscaCliente.setGeometry(280,100,300,40)
 
-        self.lbBuscarCliente = QPushButton('Buscar ', self)
-        self.lbBuscarCliente.setGeometry(150,100,100,40)
-        self.lbBuscarCliente.setStyleSheet('QPushButton {font: bold; font: 16px}')
+        self.bntBuscarCliente = QPushButton('Buscar Cliente ', self)
+        self.bntBuscarCliente.setGeometry(120,100,130,40)
+        self.bntBuscarCliente.setStyleSheet('QPushButton {font: bold; font: 16px}')
+        self.bntBuscarCliente.clicked.connect(self.bntBuscarClienteClicked)
+
 
         self.lbAddProdutos = QPushButton(' Add Produto', self)
-        self.lbAddProdutos.setGeometry(150,170,106,40)
+        self.lbAddProdutos.setGeometry(120,170,130,40)
         self.lbAddProdutos.setStyleSheet('QPushButton {font: bold; font: 16px;}')
         
         self.boxProdutos = QComboBox(self)
         self.boxProdutos.setGeometry(280,170,140,40)
+        self.boxProdutos.setStyleSheet('QComboBox {font: bold; font: 15px;}')
         self.listaProdutos()
         
         self.lbQtde = QLabel('Qtde:', self)
@@ -61,8 +67,8 @@ class TelaPrincipal(QMainWindow):
         self.boxData.setDate(QDate.currentDate())
 
         self.lbDataCompra = QLabel('Data da compra', self)
-        self.lbDataCompra.setGeometry(150,240,115,40)
-        self.lbDataCompra.setStyleSheet('QLabel {font: bold; font: 15px; border-radius: 5px; background: #D2D7D3}')
+        self.lbDataCompra.setGeometry(120,240,130,40)
+        self.lbDataCompra.setStyleSheet('QLabel {font: bold; font: 17px; border-radius: 5px; background: #D2D7D3}')
 
         self.lbTotal = QLabel('Valor a receber: R$ 00,00', self)
         self.lbTotal.setStyleSheet('QLabel {color: white; font: bold; font: 25px; background: #26C281; border-radius: 10px}')
@@ -114,6 +120,22 @@ class TelaPrincipal(QMainWindow):
     def bntCadastrarClientesClicked(self):
         self.telaCadastrocliente = CadastroClientes()
         
+
+    def bntBuscarClienteClicked(self):
+        self.nomeDigitado = self.campoBuscaCliente.text()
+        if(self.nomeDigitado == clienteCTR.buscarCliente(self.nomeDigitado)):
+            aviso = QMessageBox.information(self, '', 'Cliente {}, localizado '.format(self.nomeDigitado))
+            self.campoBuscaCliente.setStyleSheet('QLineEdit {background: #2ECC71}')
+        
+
+
+    def bntVenderClicked(self):
+        if(self.clienteLocalizado == True and self.lbQtde != 0):
+            self.nomeCliente = self.campoBuscaCliente.text().lower()
+            self.nomeProduto = self.boxProdutos.Value()
+            self.qtdeProdutos = self.spinQtde.Value()
+            self.valorProduto = ProdutoCTR.obterValor(self.nomeProduto)
+            self.DividaCTR.cadastrarDivida(self.nome, )
 
     def bntCadastrarProdutosClicked(self):
         telaCadastroProdutos = CadastroProdutos()
