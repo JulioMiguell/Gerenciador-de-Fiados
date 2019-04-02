@@ -9,7 +9,10 @@ Para executar esta aplicação é necessário ter os seguintes requisitos:
 
   * Python3 instalado
   
-  :Para instalar o PyQt5:
+  * Para instalar o PyQt5:
     pip3 install PyQt5 ou pip install PyQt5
+  
+  * Para executar o projeto:
+    Na pasta do arquivo: python3 Main.py
 
   
