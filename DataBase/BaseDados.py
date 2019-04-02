@@ -27,13 +27,13 @@ class BaseDados:
             sqlDividas = """
 	    CREATE TABLE dividas (
 	    "id_cliente_fk"	INTEGER NOT NULL,
-	    "produto_id_fk"	INTEGER NOT NULL,
+	    "id_produto_fk"	INTEGER NOT NULL,
 	    "qtde"	INTEGER NOT NULL,
 	    "data"	TEXT NOT NULL,
 	    "total"	INTEGER NOT NULL,
-	    PRIMARY KEY("id_cliente_fk","produto_id_fk"),
+	    
 	    FOREIGN KEY("id_cliente_fk") REFERENCES "clientes"("id"),
-	    FOREIGN KEY("produto_id_fk") REFERENCES "produtos"("id")
+	    FOREIGN KEY("id_produto_fk") REFERENCES "produtos"("id")
         )
         """
 

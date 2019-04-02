@@ -33,6 +33,26 @@ class ProdutoDAO:
         
         return data
     
+    def buscarProduto(nome, id = False):
+        try:
+            con = ConexaoSQL.conexaoBd()
+            cur = con.cursor()
+
+            query = """
+            SELECT nome, id
+            FROM produtos
+            WHERE nome = '{}'
+            """.format(nome)
+            cur.execute(query)
+            data = cur.fetchone()
+            print(data[1])
+            if(id):
+                return data[1]
+            else:
+                return data[0]
+        except TypeError:
+            print('Retorno da funcao buscarProdutos() vazio')
+    
     def obterValor(nome):
         con = ConexaoSQL.conexaoBd()
         cur = con.cursor()
@@ -46,8 +66,9 @@ class ProdutoDAO:
         cur.execute(query)
 
         data = cur.fetchone()
-
-        return data[2]
+        print(data)
+        
+        return data[0]
 
         
         

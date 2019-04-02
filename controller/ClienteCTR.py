@@ -3,10 +3,9 @@ from model.DAO.ClienteDAO import ClienteDAO
 
 class clienteCTR:
 
-    def buscarCliente(nome):
+    def buscarCliente(nome, id = False):
         clienteDAO = ClienteDAO
-        
-        return clienteDAO.buscarCliente(nome)
+        return clienteDAO.buscarCliente(nome, id)
 
     def cadastrarCliente(nome):
         clienteDTO = ClienteDTO()

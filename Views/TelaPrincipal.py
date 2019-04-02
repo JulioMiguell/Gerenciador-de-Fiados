@@ -77,6 +77,7 @@ class TelaPrincipal(QMainWindow):
         self.bntVender = QPushButton('Realizar Venda', self)
         self.bntVender.setStyleSheet('QPushButton {font: 20px; font: bold}')
         self.bntVender.setGeometry(350,400,160,50)
+        self.bntVender.clicked.connect(self.bntVenderClicked)
 
         #Linha vertical (apenas para manter organizado)
         self.line =QLabel('', self)
@@ -124,18 +125,25 @@ class TelaPrincipal(QMainWindow):
     def bntBuscarClienteClicked(self):
         self.nomeDigitado = self.campoBuscaCliente.text()
         if(self.nomeDigitado == clienteCTR.buscarCliente(self.nomeDigitado)):
+            self.clienteLocalizado = True
             aviso = QMessageBox.information(self, '', 'Cliente {}, localizado '.format(self.nomeDigitado))
             self.campoBuscaCliente.setStyleSheet('QLineEdit {background: #2ECC71}')
         
 
 
     def bntVenderClicked(self):
-        if(self.clienteLocalizado == True and self.lbQtde != 0):
+        if(self.clienteLocalizado == True and self.spinQtde != 0):
             self.nomeCliente = self.campoBuscaCliente.text().lower()
-            self.nomeProduto = self.boxProdutos.Value()
-            self.qtdeProdutos = self.spinQtde.Value()
+            self.nomeProduto = self.boxProdutos.currentText()
+            print(self.nomeProduto)
+            self.qtdeProdutos = self.spinQtde.value()
+            print('Quantidade produtos {}'.format(self.qtdeProdutos))
+            self.dataCompra = QDate.currentDate()
+            self.dataCompra = self.dataCompra.toString("dd-MMM-yyyy")
+            print(self.dataCompra)
             self.valorProduto = ProdutoCTR.obterValor(self.nomeProduto)
-            self.DividaCTR.cadastrarDivida(self.nome, )
+            self.totalCompras = self.qtdeProdutos * self.valorProduto
+            DividaCTR.cadastrarDivida(self.nomeCliente, self.nomeProduto, self.qtdeProdutos, self.dataCompra, self.totalCompras )
 
     def bntCadastrarProdutosClicked(self):
         telaCadastroProdutos = CadastroProdutos()

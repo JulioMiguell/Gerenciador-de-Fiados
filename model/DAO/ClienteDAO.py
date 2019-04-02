@@ -4,20 +4,23 @@ from DataBase.ConexaoSQL import ConexaoSQL
 
 class ClienteDAO:
 
-    def buscarCliente(nome):
+    def buscarCliente(nome, id):
         try:
             con = ConexaoSQL.conexaoBd()
             cur = con.cursor()
 
             query = """
-            SELECT nome
+            SELECT nome, id
             FROM clientes
             WHERE nome = '{}'
             """.format(nome)
             cur.execute(query)
             data = cur.fetchone()
-            print(data)
-            return data[0]
+            print(data[1])
+            if(id):
+                return data[1]
+            else:
+                return data[0]
         except TypeError:
             print('Retorno da funcao buscarCliente() vazio')
 
