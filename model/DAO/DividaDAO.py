@@ -33,5 +33,21 @@ class DividaDAO:
 
         return data
 
+    def obterDividaTotal(divida):
+        con = ConexaoSQL.conexaoBd()
+        cur = con.cursor()
+
+        query = """
+        SELECT SUM(total)
+        FROM dividas
+        WHERE nome_cliente = '{}'
+        """.format(divida.nomeCliente)
+
+        cur.execute(query)
+        data = cur.fetchone()
+
+        return data[0]
+
+
 
         

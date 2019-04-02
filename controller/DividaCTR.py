@@ -21,6 +21,15 @@ class DividaCTR:
     def buscarDivida(cliente):
         dividaDTO = DividaDTO()
         dividaDTO.nomeCliente = cliente
+        
         dividaDAO = DividaDAO
 
         return dividaDAO.buscarDivida(dividaDTO)
+    
+    def obterDividaTotal(cliente):
+        dividaDTO = DividaDTO()
+        dividaDTO.nomeCliente = cliente
+
+        dividaDAO = DividaDAO
+
+        return dividaDAO.obterDividaTotal(dividaDTO)

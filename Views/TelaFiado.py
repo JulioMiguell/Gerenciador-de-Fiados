@@ -77,6 +77,8 @@ class TelaFiado(QMainWindow):
             for linha in range(len(DividaCTR.buscarDivida(self.nomeDigitado))):
                 for coluna in range(5):
                     self.tabela.setItem((linha+1), coluna,QTableWidgetItem('{}'.format(self.dividas[linha][coluna])) )
+            
+            self.lbTotal.setText(' DÍVIDA TOTAL R$: {}'.format(DividaCTR.obterDividaTotal(self.nomeDigitado)))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
