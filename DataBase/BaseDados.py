@@ -26,14 +26,12 @@ class BaseDados:
 
             sqlDividas = """
 	    CREATE TABLE dividas (
-	    "id_cliente_fk"	INTEGER NOT NULL,
-	    "id_produto_fk"	INTEGER NOT NULL,
+	    "nome_cliente"	TEXT NOT NULL,
+	    "nome_produto"	TEXT NOT NULL,
 	    "qtde"	INTEGER NOT NULL,
 	    "data"	TEXT NOT NULL,
-	    "total"	INTEGER NOT NULL,
-	    
-	    FOREIGN KEY("id_cliente_fk") REFERENCES "clientes"("id"),
-	    FOREIGN KEY("id_produto_fk") REFERENCES "produtos"("id")
+	    "total"	INTEGER NOT NULL
+	
         )
         """
 

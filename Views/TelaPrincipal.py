@@ -62,7 +62,7 @@ class TelaPrincipal(QMainWindow):
         self.boxData = QDateEdit(self)
         self.boxData.setGeometry(280,240,300,40)
         self.boxData.setStyleSheet('QDateEdit {font: 16px; font: bold}')
-        self.boxData.setDisplayFormat('dd-MMM-yyyy')    
+        self.boxData.setDisplayFormat('dd-MMM-yyyy')   
 
         self.boxData.setDate(QDate.currentDate())
 
@@ -138,8 +138,8 @@ class TelaPrincipal(QMainWindow):
             print(self.nomeProduto)
             self.qtdeProdutos = self.spinQtde.value()
             print('Quantidade produtos {}'.format(self.qtdeProdutos))
-            self.dataCompra = QDate.currentDate()
-            self.dataCompra = self.dataCompra.toString("dd-MMM-yyyy")
+            self.dataCompra = self.boxData.date().toString('dd-MMM-yyyy')
+            #self.dataCompra = self.dataCompra.toString("dd-MMM-yyyy")
             print(self.dataCompra)
             self.valorProduto = ProdutoCTR.obterValor(self.nomeProduto)
             self.totalCompras = self.qtdeProdutos * self.valorProduto

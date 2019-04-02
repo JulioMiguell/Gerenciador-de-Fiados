@@ -2,6 +2,9 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from controller.DividaCTR import DividaCTR
+from controller.ClienteCTR import clienteCTR
+from controller.ProdutoCTR import ProdutoCTR
 
 class TelaFiado(QMainWindow):
     def __init__(self):
@@ -20,6 +23,7 @@ class TelaFiado(QMainWindow):
         self.lbTotal = QLabel(' DÍVIDA TOTAL R$: 00,00 ', self)
         self.lbTotal.setStyleSheet('QLabel {font: bold; font: 20px; background-color: #26C281; border-radius: 5px}')
         self.bntBuscarCliente.setStyleSheet('QPushButton {font: bold; font: 20px;}')
+        self.bntBuscarCliente.clicked.connect(self.bntBuscarClienteClicked)
 
         self.bntQuitar = QPushButton('Quitar Dívida', self)
         self.bntQuitar.setStyleSheet('QPushButton {font: bold; font: 20px;}')
@@ -60,6 +64,19 @@ class TelaFiado(QMainWindow):
         self.tableDividas.setStyleSheet('QTableWidget {font: 14px; font: bold}')
         
         return self.tableDividas
+    
+    def bntBuscarClienteClicked(self):
+        self.nomeDigitado = self.campoBuscaCliente.text()
+        if(self.nomeDigitado == clienteCTR.buscarCliente(self.nomeDigitado)):
+            self.clienteLocalizado = True
+            aviso = QMessageBox.information(self, '', 'Cliente {}, localizado '.format(self.nomeDigitado))
+            self.campoBuscaCliente.setStyleSheet('QLineEdit {background: #2ECC71}')
+            self.dividas = DividaCTR.buscarDivida(self.nomeDigitado)
+            print(DividaCTR.buscarDivida(self.nomeDigitado))
+
+            for linha in range(len(DividaCTR.buscarDivida(self.nomeDigitado))):
+                for coluna in range(5):
+                    self.tabela.setItem((linha+1), coluna,QTableWidgetItem('{}'.format(self.dividas[linha][coluna])) )
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

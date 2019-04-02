@@ -9,10 +9,29 @@ class DividaDAO:
         cur = con.cursor()
 
         query = """
-        INSERT INTO dividas (id_cliente_fk, id_produto_fk, qtde, data, total)
+        INSERT INTO dividas (nome_cliente, nome_produto, qtde, data, total)
         VALUES ('{}', '{}','{}', '{}', '{}')
-        """.format(divida.idCliente, divida.idProduto, divida.qtdeProdutos, divida.dataCompra, divida.totalCompras)
+        """.format(divida.nomeCliente, divida.nomeProduto, divida.qtdeProdutos, divida.dataCompra, divida.totalCompras)
 
         cur.execute(query)
         con.commit()
         print('Divida cadastrada com sucesso!')
+    
+    def buscarDivida(divida):
+        
+        con = ConexaoSQL.conexaoBd()
+        cur = con.cursor()
+
+        query = """
+        SELECT* 
+        FROM dividas
+        WHERE nome_cliente = '{}'
+        """.format(divida.nomeCliente)
+
+        cur.execute(query)
+        data = cur.fetchall()
+
+        return data
+
+
+        

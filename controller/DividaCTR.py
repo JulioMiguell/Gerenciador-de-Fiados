@@ -8,10 +8,8 @@ class DividaCTR:
     def cadastrarDivida(cliente, produto, qtde, data, total):
         
         dividaDTO = DividaDTO()
-        idCliente = clienteCTR.buscarCliente(cliente, True)
-        idProduto = ProdutoCTR.buscarProduto(produto, True)
-        dividaDTO.idCliente = idCliente
-        dividaDTO.idProduto = idProduto
+        dividaDTO.nomeCliente = cliente
+        dividaDTO.nomeProduto = produto
         dividaDTO.qtdeProdutos = qtde
         print('dividaDTO {}'.format(dividaDTO.totalCompras))
         dividaDTO.dataCompra = data
@@ -19,3 +17,10 @@ class DividaCTR:
 
         dividaDAO = DividaDAO
         dividaDAO.cadastrarDivida(dividaDTO)
+
+    def buscarDivida(cliente):
+        dividaDTO = DividaDTO()
+        dividaDTO.nomeCliente = cliente
+        dividaDAO = DividaDAO
+
+        return dividaDAO.buscarDivida(dividaDTO)
