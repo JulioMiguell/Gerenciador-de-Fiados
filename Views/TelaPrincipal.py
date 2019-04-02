@@ -143,18 +143,23 @@ class TelaPrincipal(QMainWindow):
         
 
     def bntVenderClicked(self):
-        if(self.clienteLocalizado == True and self.spinQtde != 0):
-            self.nomeCliente = self.campoBuscaCliente.text().lower()
-            self.nomeProduto = self.boxProdutos.currentText()
-            print(self.nomeProduto)
-            self.qtdeProdutos = self.spinQtde.value()
-            print('Quantidade produtos {}'.format(self.qtdeProdutos))
-            self.dataCompra = self.boxData.date().toString('dd-MMM-yyyy')
-            #self.dataCompra = self.dataCompra.toString("dd-MMM-yyyy")
-            print(self.dataCompra)
-            self.valorProduto = ProdutoCTR.obterValor(self.nomeProduto)
-            self.totalCompras = self.qtdeProdutos * self.valorProduto
-            DividaCTR.cadastrarDivida(self.nomeCliente, self.nomeProduto, self.qtdeProdutos, self.dataCompra, self.totalCompras )
+
+        aviso = QMessageBox.question(self, 'Atenção', 'Você deseja realmente registrar esta venda?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if (aviso == QMessageBox.Yes):
+
+            if(self.clienteLocalizado == True and self.spinQtde != 0):
+                self.nomeCliente = self.campoBuscaCliente.text().lower()
+                self.nomeProduto = self.boxProdutos.currentText()
+                print(self.nomeProduto)
+                self.qtdeProdutos = self.spinQtde.value()
+                print('Quantidade produtos {}'.format(self.qtdeProdutos))
+                self.dataCompra = self.boxData.date().toString('dd-MMM-yyyy')
+                #self.dataCompra = self.dataCompra.toString("dd-MMM-yyyy")
+                print(self.dataCompra)
+                self.valorProduto = ProdutoCTR.obterValor(self.nomeProduto)
+                self.totalCompras = self.qtdeProdutos * self.valorProduto
+                DividaCTR.cadastrarDivida(self.nomeCliente, self.nomeProduto, self.qtdeProdutos, self.dataCompra, self.totalCompras )
 
     def bntCadastrarProdutosClicked(self):
         telaCadastroProdutos = CadastroProdutos()

@@ -14,6 +14,8 @@ class TelaFiado(QMainWindow):
         self.top = 100
         self.width = 600
         self.height = 630 
+
+        self.nomeDigitado = None
         
         self.initUI()
 
@@ -27,6 +29,7 @@ class TelaFiado(QMainWindow):
 
         self.bntQuitar = QPushButton('Quitar Dívida', self)
         self.bntQuitar.setStyleSheet('QPushButton {font: bold; font: 20px;}')
+        self.bntQuitar.clicked.connect(self.bntQuitarClicked)
 
         self.campoBuscaCliente = QLineEdit(self)
         #self.campoBuscaCliente.setGeometry(0,0,200,50)
@@ -78,7 +81,15 @@ class TelaFiado(QMainWindow):
                 for coluna in range(5):
                     self.tabela.setItem((linha+1), coluna,QTableWidgetItem('{}'.format(self.dividas[linha][coluna])) )
             
-            self.lbTotal.setText(' DÍVIDA TOTAL R$: {}'.format(DividaCTR.obterDividaTotal(self.nomeDigitado)))
+            self.lbTotal.setText(' DÍVIDA TOTAL R$: {:0.2f}'.format(DividaCTR.obterDividaTotal(self.nomeDigitado)))
+    
+    def bntQuitarClicked(self):
+        avisoExlusão = QMessageBox.question(self, 'Atenção', 'Você deseja realmente quitar a divida do cliente: {}'.format(self.nomeDigitado), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if (avisoExlusão == QMessageBox.Yes):
+            DividaCTR.quitarDivida(self.nomeDigitado)
+
+            self.createTable()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

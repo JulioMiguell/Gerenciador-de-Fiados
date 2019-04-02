@@ -48,6 +48,17 @@ class DividaDAO:
 
         return data[0]
 
+    def quitarDivida(divida):
+        con = ConexaoSQL.conexaoBd()
+        cur = con.cursor()
 
+        query = """
+        DELETE
+        FROM dividas
+        WHERE nome_cliente = '{}'
+        """.format(divida.nomeCliente)
+
+        cur.execute(query)
+        con.commit()
 
         

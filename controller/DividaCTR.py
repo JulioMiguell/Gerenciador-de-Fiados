@@ -33,3 +33,13 @@ class DividaCTR:
         dividaDAO = DividaDAO
 
         return dividaDAO.obterDividaTotal(dividaDTO)
+    
+    def quitarDivida(cliente):
+        dividaDTO = DividaDTO()
+        dividaDTO.nomeCliente = cliente
+
+        dividaDAO = DividaDAO
+
+        dividaDAO.quitarDivida(dividaDTO)
+
+        
