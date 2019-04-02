@@ -93,7 +93,9 @@ class TelaFiado(QMainWindow):
                 self.lbTotal.setText(' DÍVIDA TOTAL R$: {:0.2f}'.format(DividaCTR.obterDividaTotal(self.nomeDigitado)))
             else:
                 aviso = QMessageBox.information(self, 'Aviso:', 'Não há dividas a serem quitadas')
-
+        else:
+            aviso = QMessageBox.information(self, '', 'Cliente {} NÃO localizado '.format(self.nomeDigitado))
+            self.campoBuscaCliente.setStyleSheet('QLineEdit {background: #F22613}')
 
     def bntQuitarClicked(self):
         avisoExlusão = QMessageBox.question(self, 'Atenção', 'Você deseja realmente quitar a divida do cliente: {}'.format(self.nomeDigitado), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)

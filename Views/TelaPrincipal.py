@@ -156,7 +156,7 @@ class TelaPrincipal(QMainWindow):
 
         if (aviso == QMessageBox.Yes):
 
-            if(self.clienteLocalizado == True and self.spinQtde != 0):
+            if(self.clienteLocalizado == True and self.spinQtde.value() != 0):
                 self.nomeCliente = self.campoBuscaCliente.text().lower()
                 self.nomeProduto = self.boxProdutos.currentText()
                 print(self.nomeProduto)
