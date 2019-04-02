@@ -58,7 +58,7 @@ class CadastroProdutos(QDialog):
         self.valorInserido = self.campoValor.value()
 
         if (self.nomeDigitado != '' and self.valorInserido != 0):
-            ProdutoCTR.cadastrarProduto(self.nomeDigitado, self.valorInserido)
+            ProdutoCTR.cadastrarProduto(self.nomeDigitado.lower(), self.valorInserido)
             avisoCadastro = QMessageBox.information(self, 'Aviso', 
             'Produto: {} de valor R$ {} cadastrado com sucesso!'.format(self.nomeDigitado, self.valorInserido))
             

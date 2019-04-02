@@ -42,9 +42,10 @@ class TelaPrincipal(QMainWindow):
         self.bntBuscarCliente.clicked.connect(self.bntBuscarClienteClicked)
 
 
-        self.lbAddProdutos = QPushButton(' Add Produto', self)
-        self.lbAddProdutos.setGeometry(120,170,130,40)
-        self.lbAddProdutos.setStyleSheet('QPushButton {font: bold; font: 16px;}')
+        self.bntAddProdutos = QPushButton(' Add Produto', self)
+        self.bntAddProdutos.setGeometry(120,170,130,40)
+        self.bntAddProdutos.setStyleSheet('QPushButton {font: bold; font: 16px;}')
+        self.bntAddProdutos.clicked.connect(self.bntAddProdutosClicked)
         
         self.boxProdutos = QComboBox(self)
         self.boxProdutos.setGeometry(280,170,140,40)
@@ -128,8 +129,18 @@ class TelaPrincipal(QMainWindow):
             self.clienteLocalizado = True
             aviso = QMessageBox.information(self, '', 'Cliente {}, localizado '.format(self.nomeDigitado))
             self.campoBuscaCliente.setStyleSheet('QLineEdit {background: #2ECC71}')
-        
+        else:
+            aviso = QMessageBox.information(self, 'Atenção!', 'Cliente {} NÃO localizado '.format(self.nomeDigitado))
+            self.campoBuscaCliente.setStyleSheet('QLineEdit {background: #F22613}')
 
+    def bntAddProdutosClicked(self):
+        self.boxProdutos.setStyleSheet('QComboBox{background: #26A65B}')
+        self.nomeProduto = self.boxProdutos.currentText()
+        self.qtdeProdutos = self.spinQtde.value()
+        self.valorProduto = ProdutoCTR.obterValor(self.nomeProduto)
+        self.lbTotal.setText('Valor a receber: R$ {:0.2f}'.format(self.qtdeProdutos*self.valorProduto))
+        aviso = QMessageBox.information(self, 'Aviso: ', 'Produto {} adicionado!'.format(self.boxProdutos.currentText()))
+        
 
     def bntVenderClicked(self):
         if(self.clienteLocalizado == True and self.spinQtde != 0):

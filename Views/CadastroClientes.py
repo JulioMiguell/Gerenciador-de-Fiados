@@ -50,7 +50,7 @@ class CadastroClientes(QMainWindow):
         self.nomeDigitado = self.campoNome.text()
 
         if (self.nomeDigitado != ''):
-            clienteCTR.cadastrarCliente(self.nomeDigitado)
+            clienteCTR.cadastrarCliente(self.nomeDigitado.lower())
             avisoCadastro = QMessageBox.information(self, 'Aviso', 'Cliente: {} cadastrado com sucesso!'.format(self.nomeDigitado))
         else:
             aviso = QMessageBox.information(self, 'Atenção!', 'Registro em branco, favor inserir um nome a ser cadastrado')
