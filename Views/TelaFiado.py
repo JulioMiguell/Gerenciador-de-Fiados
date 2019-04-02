@@ -23,7 +23,7 @@ class TelaFiado(QMainWindow):
         
         self.bntBuscarCliente = QPushButton('Buscar cliente ', self)
         self.lbTotal = QLabel(' DÍVIDA TOTAL R$: 00,00 ', self)
-        self.lbTotal.setStyleSheet('QLabel {font: bold; font: 20px; background-color: #26C281; border-radius: 5px}')
+        self.lbTotal.setStyleSheet('QLabel {font: bold; font: 20px; background-color: #F22613; border-radius: 5px}')
         self.bntBuscarCliente.setStyleSheet('QPushButton {font: bold; font: 20px;}')
         self.bntBuscarCliente.clicked.connect(self.bntBuscarClienteClicked)
 
@@ -54,7 +54,7 @@ class TelaFiado(QMainWindow):
     
     def createTable(self):
         self.tableDividas = QTableWidget(self)
-        self.tableDividas.setRowCount(20)
+        self.tableDividas.setRowCount(30)
         self.tableDividas.setColumnCount(5)
         self.tableDividas.setItem(0,0,QTableWidgetItem('NOME'))
         self.tableDividas.setItem(0,1,QTableWidgetItem('PRODUTO'))
@@ -68,6 +68,12 @@ class TelaFiado(QMainWindow):
         
         return self.tableDividas
     
+    def limparTabela(self):
+        for linha in range(29):
+            for coluna in range(5):
+                self.tableDividas.setItem(linha,coluna,QTableWidgetItem(' '))
+
+
     def bntBuscarClienteClicked(self):
         self.nomeDigitado = self.campoBuscaCliente.text()
         if(self.nomeDigitado == clienteCTR.buscarCliente(self.nomeDigitado)):
@@ -75,21 +81,29 @@ class TelaFiado(QMainWindow):
             aviso = QMessageBox.information(self, '', 'Cliente {}, localizado '.format(self.nomeDigitado))
             self.campoBuscaCliente.setStyleSheet('QLineEdit {background: #2ECC71}')
             self.dividas = DividaCTR.buscarDivida(self.nomeDigitado)
+            print(len(self.dividas))
             print(DividaCTR.buscarDivida(self.nomeDigitado))
 
             for linha in range(len(DividaCTR.buscarDivida(self.nomeDigitado))):
                 for coluna in range(5):
                     self.tabela.setItem((linha+1), coluna,QTableWidgetItem('{}'.format(self.dividas[linha][coluna])) )
+            print(type(DividaCTR.obterDividaTotal(self.nomeDigitado)))
             
-            self.lbTotal.setText(' DÍVIDA TOTAL R$: {:0.2f}'.format(DividaCTR.obterDividaTotal(self.nomeDigitado)))
-    
+            if(len(self.dividas) != 0):
+                self.lbTotal.setText(' DÍVIDA TOTAL R$: {:0.2f}'.format(DividaCTR.obterDividaTotal(self.nomeDigitado)))
+            else:
+                aviso = QMessageBox.information(self, 'Aviso:', 'Não há dividas a serem quitadas')
+
+
     def bntQuitarClicked(self):
         avisoExlusão = QMessageBox.question(self, 'Atenção', 'Você deseja realmente quitar a divida do cliente: {}'.format(self.nomeDigitado), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if (avisoExlusão == QMessageBox.Yes):
             DividaCTR.quitarDivida(self.nomeDigitado)
-
-            self.createTable()
+            self.lbTotal.setStyleSheet('QLabel {font: bold; font: 20px; background-color: #00B16A; border-radius: 5px}')
+            aviso = QMessageBox.information(self, 'Aviso:', ' A divida do cliente {} foi quitada com sucesso'.format(self.nomeDigitado))
+            self.lbTotal.setText(' DÍVIDA TOTAL R$: 00,00')
+            self.limparTabela()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

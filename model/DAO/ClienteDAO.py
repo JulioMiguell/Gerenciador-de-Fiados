@@ -4,23 +4,20 @@ from DataBase.ConexaoSQL import ConexaoSQL
 
 class ClienteDAO:
 
-    def buscarCliente(nome, id):
+    def buscarCliente(nome):
         try:
             con = ConexaoSQL.conexaoBd()
             cur = con.cursor()
 
             query = """
-            SELECT nome, id
+            SELECT id, nome
             FROM clientes
             WHERE nome = '{}'
             """.format(nome)
             cur.execute(query)
             data = cur.fetchone()
-            print(data[1])
-            if(id):
-                return data[1]
-            else:
-                return data[0]
+    
+            return data[1]
         except TypeError:
             print('Retorno da funcao buscarCliente() vazio')
 
@@ -49,6 +46,22 @@ class ClienteDAO:
 
         cur.execute(query)
         con.commit()
+
+    def listarClientes():
+        try:
+            con = ConexaoSQL.conexaoBd()
+            cur = con.cursor()
+
+            query = """
+            SELECT id, nome
+            FROM clientes
+            """
+            cur.execute(query)
+            data = cur.fetchall()
+    
+            return data
+        except TypeError:
+            print('Retorno da funcao buscarCliente() vazio')
 
     
 

@@ -6,6 +6,7 @@ from PyQt5.QtCore import *
 from Views.CadastroClientes import CadastroClientes
 from Views.CadastroProdutos import CadastroProdutos
 from Views.TelaFiado import TelaFiado
+from Views.telaListarClientes import TelaListarClientes
 from controller.ProdutoCTR import ProdutoCTR
 from controller.ClienteCTR import clienteCTR
 from controller.DividaCTR import DividaCTR
@@ -85,28 +86,33 @@ class TelaPrincipal(QMainWindow):
         self.line.setGeometry(650, 0, 5, 480)
         self.line.setStyleSheet('QLabel { background: #22313F}')
 
-        self.bntVerQuitarFiados = QPushButton('Ver|Quitar Fiados', self)
-        self.bntVerQuitarFiados.setStyleSheet('QPushButton {font: 16px; font: bold}')
-        self.bntVerQuitarFiados.setGeometry(670,30,165,50)
-        self.bntVerQuitarFiados.clicked.connect(self.bntVerQuitarFiadosClicked)
-
         self.imagemLabel = QLabel(self)
         pixmap = QPixmap('Views/imagens/money.png')
         self.imagemLabel.setPixmap(pixmap)
-        self.imagemLabel.setGeometry(675,90,147,152)
+        self.imagemLabel.setGeometry(675,10,147,152)
+
+        self.bntVerQuitarFiados = QPushButton('Ver|Quitar Fiados', self)
+        self.bntVerQuitarFiados.setStyleSheet('QPushButton {font: 16px; font: bold}')
+        self.bntVerQuitarFiados.setGeometry(665,155,165,50)
+        self.bntVerQuitarFiados.clicked.connect(self.bntVerQuitarFiadosClicked)
+
+        self.bntListarClientes = QPushButton('Listar clientes', self)
+        self.bntListarClientes.setStyleSheet('QPushButton {font: 16px; font: bold}')
+        self.bntListarClientes.setGeometry(690,230,120,50)
+        self.bntListarClientes.clicked.connect(self.bntListarClientesClicked)
 
         #Seção de cadastrar clientes e produtos
         self.lbCadastrar = QLabel(' Cadastrar/Alterar: ', self)
         self.lbCadastrar.setStyleSheet('QLabel {font: 18px; font: bold; background: #4B77BE; border-radius: 5px}')
-        self.lbCadastrar.setGeometry(665,250,170,40)
+        self.lbCadastrar.setGeometry(665,310,170,40)
         
         self.bntClientes = QPushButton('Clientes', self)
         self.bntClientes.setStyleSheet('QPushButton {font: 20px; font: bold}')
-        self.bntClientes.setGeometry(700,310,120,50)
+        self.bntClientes.setGeometry(690,360,120,50)
         self.bntClientes.clicked.connect(self.bntCadastrarClientesClicked)
         
         self.bntProdutos = QPushButton('Produtos', self)
-        self.bntProdutos.setGeometry(700,390,120,50)
+        self.bntProdutos.setGeometry(690,420,120,50)
         self.bntProdutos.setStyleSheet('QPushButton {font: 20px; font: bold}')
         self.bntProdutos.clicked.connect(self.bntCadastrarProdutosClicked)
         
@@ -122,6 +128,8 @@ class TelaPrincipal(QMainWindow):
     def bntCadastrarClientesClicked(self):
         self.telaCadastrocliente = CadastroClientes()
         
+    def bntListarClientesClicked(self):
+        self.telaListarClientes = TelaListarClientes()
 
     def bntBuscarClienteClicked(self):
         self.nomeDigitado = self.campoBuscaCliente.text()
@@ -161,6 +169,9 @@ class TelaPrincipal(QMainWindow):
                 self.totalCompras = self.qtdeProdutos * self.valorProduto
                 DividaCTR.cadastrarDivida(self.nomeCliente, self.nomeProduto, self.qtdeProdutos, self.dataCompra, self.totalCompras )
 
+                aviso = QMessageBox.information(self, 'Aviso: ', 'A venda foi registrada com sucesso')
+            else:
+                aviso = QMessageBox.information(self, 'Aviso: ', 'Verificar os campos antes de realizar venda')
     def bntCadastrarProdutosClicked(self):
         telaCadastroProdutos = CadastroProdutos()
         telaCadastroProdutos.exec_()
