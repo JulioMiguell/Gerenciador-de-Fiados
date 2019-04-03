@@ -132,7 +132,7 @@ class TelaPrincipal(QMainWindow):
         self.telaListarClientes = TelaListarClientes()
 
     def bntBuscarClienteClicked(self):
-        self.nomeDigitado = self.campoBuscaCliente.text()
+        self.nomeDigitado = self.campoBuscaCliente.text().lower()
         if(self.nomeDigitado == clienteCTR.buscarCliente(self.nomeDigitado)):
             self.clienteLocalizado = True
             aviso = QMessageBox.information(self, '', 'Cliente {}, localizado '.format(self.nomeDigitado))
