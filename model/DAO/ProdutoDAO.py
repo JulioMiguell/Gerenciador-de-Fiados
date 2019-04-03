@@ -45,7 +45,6 @@ class ProdutoDAO:
             """.format(nome)
             cur.execute(query)
             data = cur.fetchone()
-            print(data[1])
             
             return data[0]
         except TypeError:
@@ -67,6 +66,18 @@ class ProdutoDAO:
         print(data)
         
         return data[0]
+    
+    def excluirProduto(nome):
+        con = ConexaoSQL.conexaoBd()
+        cur = con.cursor()
 
+        query = """
+        DELETE
+        FROM produtos
+        WHERE nome = '{}'
+        """.format(nome)
+
+        cur.execute(query)
+        con.commit()
         
         

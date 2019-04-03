@@ -57,7 +57,7 @@ class CadastroClientes(QMainWindow):
         
 
     def bntExcluirClicked(self):
-        self.nomeDigitado = self.campoNome.text()
+        self.nomeDigitado = self.campoNome.text().lower()
         
         if(self.nomeDigitado == ''):
             aviso = QMessageBox.information(self, 'Atenção!', 'Registro em branco! \n É necessário inserir o nome a ser excluído')

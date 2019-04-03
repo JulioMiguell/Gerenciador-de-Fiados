@@ -47,6 +47,7 @@ class CadastroProdutos(QDialog):
         self.bntExcluir = QPushButton('Excluir', self)
         self.bntExcluir.setStyleSheet('QPushButton {font: 20px; font: bold}')
         self.bntExcluir.setGeometry(220,250,160,50)
+        self.bntExcluir.clicked.connect(self.bntExcluirClicked)
 
         self.setFixedSize(self.width, self.height)
         self.setWindowTitle(self.title)
@@ -66,6 +67,19 @@ class CadastroProdutos(QDialog):
 
         else:
           aviso = QMessageBox.information(self, 'Atenção!', 'Algum Registro em branco! \n Favor preencher todos os campos')
+    
+    def bntExcluirClicked(self):
+        self.nomeDigitado = self.campoNome.text().lower()
+        
+        if(self.nomeDigitado == ''):
+            aviso = QMessageBox.information(self, 'Atenção!', 'Registro em branco! \n É necessário inserir o nome a ser excluído')
+        
+        if(ProdutoCTR.buscarProduto(self.nomeDigitado) == self.nomeDigitado):
+            avisoExlusão = QMessageBox.question(self, 'Atenção', 'Você deseja realmente excluir o produto: {}'.format(self.nomeDigitado), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if (avisoExlusão == QMessageBox.Yes):
+                #self.bntCadastrarClickedStatus = True
+                ProdutoCTR.excluirProduto(self.nomeDigitado)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

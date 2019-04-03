@@ -21,8 +21,14 @@ class ProdutoCTR:
 
         return produtoDAO.obterValor(nome)
     
-    def buscarProduto(nome, id):
+    def buscarProduto(nome):
         produtoDAO = ProdutoDAO
 
-        return produtoDAO.buscarProduto(nome, id)
+        return produtoDAO.buscarProduto(nome)
 
+    def excluirProduto(nome):
+        produtoDTO = ProdutoDTO()
+        produtoDTO.Nome = nome
+
+        produtoDAO = ProdutoDAO
+        produtoDAO.excluirProduto(produtoDTO.Nome)
