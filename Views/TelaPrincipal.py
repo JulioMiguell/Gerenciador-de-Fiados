@@ -152,7 +152,7 @@ class TelaPrincipal(QMainWindow):
 
     def bntVenderClicked(self):
 
-        aviso = QMessageBox.question(self, 'Atenção', 'Você deseja realmente registrar esta venda?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        aviso = QMessageBox.question(self, 'Atenção', 'Você deseja realmente registrar esta venda? \n Obs! Lembrar de verificar o cliente a qual a venda será registrada', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if (aviso == QMessageBox.Yes):
 
