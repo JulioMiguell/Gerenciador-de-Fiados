@@ -1,4 +1,4 @@
-# Projeto-final-P2-Fiados
+# Gerenciador de Fiados
 Fiados é uma aplicação extremamente simples desenvolvida em Python com PyQt5. 
 
 O objetivo deste programa é facilitar o gerenciamento de devedores em pequenos comércios locais. 
